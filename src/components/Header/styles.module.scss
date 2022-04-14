@@ -1,0 +1,47 @@
+.headerContainer {
+  height: 6rem;
+  border-bottom: 1px solid var(--gray-800);
+}
+
+.headerContent {
+  max-width: 1200px;
+  height: 5rem;
+  margin: auto;
+  
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+
+  svg {
+    font-size: 4rem;
+    color: var(--yellow-500);
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+}
+
+.userContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+
+  p {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--yellow-500);
+  }
+}

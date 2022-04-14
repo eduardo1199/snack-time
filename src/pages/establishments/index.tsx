@@ -1,5 +1,10 @@
+import { Header } from '../../components/Header/Header';
+
 export default function Establishments() {
   return(
-    <h1>establishments</h1>
+    <>
+      <Header />
+      <h1>establishments</h1>
+    </>
   )
 }
