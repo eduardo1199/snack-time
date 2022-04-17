@@ -17,7 +17,10 @@ export function Header() {
         </div>
         <div className={styles.userContainer}>
           <AccountMenu />
-          <p>{status === 'authenticated' ? session.user.name : 'Não informado'}</p>
+          <div>
+            <p>{status === 'authenticated' ? session.user.name : 'Não informado'}</p>
+            <span>{status === 'authenticated' ? session.user.email : 'Não informado'}</span>
+          </div>
         </div>
       </div>
     </header>
