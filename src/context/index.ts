@@ -9,12 +9,27 @@ export type Order = {
   price: number;
 }
 
+type Slug = {
+  description: string;
+  establishment: string;
+  id: number;
+  name: string;
+  price: number;
+  type: string;
+}
+
 class ShoppingCart {
   @observable order: Order[];
+  @observable slugs: Slug[];
   
   constructor() {
     makeObservable(this);
     this.order = [];
+    this.slugs = [];
+  }
+
+  @action setSlugs(value: Slug[]){
+    this.slugs = value;
   }
 
   @action setOrderShoppingCart = (orderParams: Order) => {
@@ -41,6 +56,12 @@ class ShoppingCart {
 
   @action getCheckoutOrder() {
     return this.order.filter(order => order.quantity !== 0);
+  }
+
+  @action getFilterOrder(name?: string) {
+    if (!name) return this.slugs;
+
+    return this.slugs.filter(slug => slug.name.includes(name));
   }
 
   @computed get totalPriceOrder(): string {

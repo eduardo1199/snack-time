@@ -1,4 +1,5 @@
 import { Fastfood } from '@mui/icons-material';
+import { Input } from '@mui/material';
 
 import { useSession } from 'next-auth/react';
 import { AccountMenu } from '../AccountMenu/AccountMenu';

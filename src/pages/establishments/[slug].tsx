@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
-import { Box, Grid, Container,  } from '@mui/material'; 
+import { useContext, useEffect, useState } from "react";
+import { Box, Grid, Input } from '@mui/material'; 
 import { Image } from '@chakra-ui/react';
 import { Header } from "../../components/Header/Header";
 import { NavBar } from '../../components/NavBar';
@@ -9,25 +9,19 @@ import { api } from "../../services/api";
 import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
 import { formatPrice } from '../../utils';
+import { observer } from 'mobx-react';
+import { ShoppingCartStore } from '../../context';
 
-type Slug = {
-  description: string;
-  establishment: string;
-  id: number;
-  name: string;
-  price: number;
-  type: string;
-}
-
-export default function SlugEstablishment() {
-  const [slugs, setSlugs] = useState<Slug[]>([]);
+const SlugEstablishment = observer(() => {
+  const [search, setSearch] = useState('');
+  const shoppingCart = useContext(ShoppingCartStore);
   const { query } = useRouter();
 
   useEffect(() => {
     const getSlugEstablishment = async () => {
       const response = await api.get(query.slug as string);
 
-      setSlugs(response.data);
+      shoppingCart.setSlugs(response.data);
     }
 
     if(!query) return;
@@ -35,10 +29,22 @@ export default function SlugEstablishment() {
     getSlugEstablishment();
   }, [query.slug]);
 
+  
+
   return (
     <>
       <Header />
       <NavBar />
+      <Box display="flex" justifyContent="center" alignItems="center" marginTop="1rem" marginBottom="1rem">
+        <Input
+          style={{
+            color: 'white',
+            width: '75%'
+          }}
+          placeholder='pesquisar...'
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </Box>
       <Box flexDirection="column" height="100vh">
         <Box 
           maxWidth="1300px"
@@ -47,7 +53,7 @@ export default function SlugEstablishment() {
           marginTop="2rem"
         >
           <Grid container spacing={8} direction="row">
-            {slugs.map(slug => {
+            {shoppingCart.getFilterOrder(search).map(slug => {
               return(
                 <Grid item xs={4} key={slug.id}>
                   <BoxContainer>
@@ -80,4 +86,6 @@ export default function SlugEstablishment() {
       </Box>
     </>
   )
-}
+})
+
+export default SlugEstablishment;

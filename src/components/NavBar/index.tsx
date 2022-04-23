@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { ShoppingCartStore } from '../../context';
 import { Container } from '../../styles/navbar.module';
 import router from 'next/router';
+import { Input } from '@chakra-ui/react';
 
 export const NavBar = observer(() => {
   const shoppingCart = useContext(ShoppingCartStore);
