@@ -16,7 +16,6 @@ export const InputDisplayNumberComponet = observer((props: InputDisplayNumberCom
 
   const [value, setValue] = useState(0);
 
-
   return(
     <InputDisplayNumber>
       <Button

@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 import { action, observable, computed, toJS, makeObservable } from 'mobx';
 import { formatPrice } from '../utils';
 
-type Order = {
+export type Order = {
   name: string;
   quantity: number;
   establishment: string;
@@ -11,16 +11,13 @@ type Order = {
 
 class ShoppingCart {
   @observable order: Order[];
-
+  
   constructor() {
     makeObservable(this);
     this.order = [];
   }
 
   @action setOrderShoppingCart = (orderParams: Order) => {
-
-    console.log(orderParams);
-
     if(this.order.length === 0) {
       const newOrder = [orderParams];
       
@@ -42,6 +39,10 @@ class ShoppingCart {
     }
   }
 
+  @action getCheckoutOrder() {
+    return this.order.filter(order => order.quantity !== 0);
+  }
+
   @computed get totalPriceOrder(): string {
     const calculatorTotal = formatPrice(this.order.reduce((sumTotal, order) => {
       return sumTotal + order.quantity * order.price
@@ -59,6 +60,8 @@ class ShoppingCart {
 
     return calculatorTotal;
   }
+
+
   
 }
 

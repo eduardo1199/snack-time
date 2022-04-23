@@ -20,9 +20,6 @@ interface Establishments {
 }
 
 export default function Establishments({ establishments }: Establishments) {
-
-  console.log(establishments);
-
   return(
     <>
       <Header />
