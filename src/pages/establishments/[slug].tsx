@@ -44,7 +44,7 @@ export default function SlugEstablishment() {
           marginRight="auto"
           marginTop="2rem"
         >
-          <Grid container spacing={3} direction="row">
+          <Grid container spacing={8} direction="row">
             {slugs.map(slug => {
               return(
                 <Grid item xs={4} key={slug.id}>

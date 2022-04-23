@@ -2,7 +2,6 @@
 import { InputDisplayNumber } from '../../styles/displayNumber.module';
 import {  Button, Input, useNumberInput } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
 import { ShoppingCartStore } from '../../context';
 import { useContext } from 'react';
 
@@ -27,8 +26,6 @@ export const InputDisplayNumberComponet = observer((props: InputDisplayNumberCom
   const inc = getIncrementButtonProps()
   const dec = getDecrementButtonProps()
   const input = getInputProps()
-
-  console.log(shoppingCart.totalOfOrders);
 
   return(
     <InputDisplayNumber>

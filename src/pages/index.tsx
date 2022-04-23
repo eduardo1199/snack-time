@@ -25,7 +25,7 @@ export default function Home() {
         </section>
         <div className={styles.containerSignIn}>
           <Fastfood />
-          <Button onClick={() => signIn('github', )}>
+          <Button onClick={() => signIn('github')}>
             Entrar <GitHub />
           </Button>
         </div>
