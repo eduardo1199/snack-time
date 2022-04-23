@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Box, Grid, Container,  } from '@mui/material'; 
 import { Image } from '@chakra-ui/react';
 import { Header } from "../../components/Header/Header";
+import { NavBar } from '../../components/NavBar';
 import { api } from "../../services/api";
 
 import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
@@ -35,47 +36,44 @@ export default function SlugEstablishment() {
   return (
     <>
       <Header />
+      <NavBar />
       <Box flexDirection="column" height="100vh">
         <Box 
-          width="100%"
-          maxWidth="1600px"
+          maxWidth="1300px"
           marginLeft="auto"
           marginRight="auto"
-          marginTop="5rem"
+          marginTop="2rem"
         >
-          <Container component="section" maxWidth="lg">
-            <Grid container spacing={3}>
-              {slugs.map(slug => {
-                return(
-                  <Grid item xs={12} sm={6} key={slug.id}>
-                    <BoxContainer>
-                    
-                        <Image 
-                          objectFit='cover'
-                          borderRadius="10"
-                          src='https://bit.ly/dan-abramov'
-                          alt='Dan Abramov'
-                        />
+          <Grid container spacing={3} direction="row">
+            {slugs.map(slug => {
+              return(
+                <Grid item xs={4} key={slug.id}>
+                  <BoxContainer>
+                      <Image 
+                        objectFit='cover'
+                        borderRadius="10"
+                        src='https://bit.ly/dan-abramov'
+                        alt='Dan Abramov'
+                      />
 
-                        <h5>{slug.establishment}</h5>
-                        
-                        <PriceContainer>
-                          <p>{slug.name}</p>
-                          <span>{formatPrice(slug.price)}</span>
-                        </PriceContainer>
+                      <h5>{slug.establishment}</h5>
+                      
+                      <PriceContainer>
+                        <p>{slug.name}</p>
+                        <span>{formatPrice(slug.price)}</span>
+                      </PriceContainer>
 
-                        <InputDisplayNumberComponet 
-                          price={slug.price}
-                          establishment={slug.establishment}
-                          slug={slug.name}
-                        />
-                        
-                    </BoxContainer>
-                  </Grid>
-                )
-              })}
-            </Grid>
-          </Container> 
+                      <InputDisplayNumberComponet 
+                        price={slug.price}
+                        establishment={slug.establishment}
+                        slug={slug.name}
+                      />
+                      
+                  </BoxContainer>
+                </Grid>
+              )
+            })}
+          </Grid>
         </Box>
       </Box>
     </>

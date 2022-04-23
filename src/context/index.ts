@@ -39,10 +39,18 @@ class ShoppingCart {
     }
   }
 
-  @computed get totalOfOrders(): string {
+  @computed get totalPriceOrder(): string {
     const calculatorTotal = formatPrice(this.order.reduce((sumTotal, order) => {
       return sumTotal + order.quantity * order.price
     }, 0));
+
+    return calculatorTotal;
+  }
+
+  @computed get totalQuantity(): number {
+    const calculatorTotal = this.order.reduce((sumTotal, order) => {
+      return sumTotal + order.quantity;
+    }, 0);
 
     return calculatorTotal;
   }
