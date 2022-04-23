@@ -30,8 +30,10 @@ export default function SlugEstablishment() {
       setSlugs(response.data);
     }
 
+    if(!query) return;
+
     getSlugEstablishment();
-  }, [query]);
+  }, [query.slug]);
 
   return (
     <>

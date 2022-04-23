@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { action, observable, computed, toJS } from 'mobx';
+import { action, observable, computed, toJS, makeObservable } from 'mobx';
 import { formatPrice } from '../utils';
 
 type Order = {
@@ -13,10 +13,13 @@ class ShoppingCart {
   @observable order: Order[];
 
   constructor() {
+    makeObservable(this);
     this.order = [];
   }
 
   @action setOrderShoppingCart = (orderParams: Order) => {
+
+    console.log(orderParams);
 
     if(this.order.length === 0) {
       const newOrder = [orderParams];
@@ -48,6 +51,8 @@ class ShoppingCart {
   }
 
   @computed get totalQuantity(): number {
+    console.log(toJS(this.order));
+
     const calculatorTotal = this.order.reduce((sumTotal, order) => {
       return sumTotal + order.quantity;
     }, 0);

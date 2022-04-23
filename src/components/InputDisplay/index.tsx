@@ -3,7 +3,7 @@ import { InputDisplayNumber } from '../../styles/displayNumber.module';
 import {  Button, Input, useNumberInput } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import { ShoppingCartStore } from '../../context';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 interface InputDisplayNumberComponetProps {
   price: number;
@@ -14,42 +14,30 @@ interface InputDisplayNumberComponetProps {
 export const InputDisplayNumberComponet = observer((props: InputDisplayNumberComponetProps) => {
   const shoppingCart = useContext(ShoppingCartStore);
 
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
-    useNumberInput({
-      step: 1,
-      defaultValue: 0,
-      min: 0,
-      max: 6,
-      precision: 0,
-    })
+  const [value, setValue] = useState(0);
 
-  const inc = getIncrementButtonProps()
-  const dec = getDecrementButtonProps()
-  const input = getInputProps()
 
   return(
     <InputDisplayNumber>
-      <Button 
-        {...dec} 
+      <Button
         onClick={
-          () => shoppingCart.setOrderShoppingCart({
+          () => {shoppingCart.setOrderShoppingCart({
             establishment: props.establishment,
             name: props.slug,
             price: props.price,
-            quantity: Number(input['aria-valuenow'])
-          })
+            quantity: value === 0 ? 0 : value - 1
+          });setValue(prev => prev === 0 ? 0 : prev - 1);}
         }
       >-</Button>
-      <Input {...input} />
-      <Button 
-        {...inc}
+      <Input value={value} readOnly/>
+      <Button
         onClick={
-          () => shoppingCart.setOrderShoppingCart({
+          () => {shoppingCart.setOrderShoppingCart({
             establishment: props.establishment,
             name: props.slug,
             price: props.price,
-            quantity: Number(input['aria-valuenow'])
-          })
+            quantity: value + 1
+          });setValue(prev => prev + 1)}
         }
       >+</Button>
     </InputDisplayNumber>
