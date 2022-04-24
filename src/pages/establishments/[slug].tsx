@@ -10,7 +10,8 @@ import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
 import { formatPrice } from '../../utils';
 import { observer } from 'mobx-react';
-import { ShoppingCartStore } from '../../context';
+import { ShoppingCartStore, Slug } from '../../context';
+import { toJS } from 'mobx';
 
 const SlugEstablishment = observer(() => {
   const [search, setSearch] = useState('');
@@ -24,12 +25,8 @@ const SlugEstablishment = observer(() => {
       shoppingCart.setSlugs(response.data);
     }
 
-    if(!query) return;
-
     getSlugEstablishment();
-  }, [query.slug]);
-
-  
+  }, [query.slug]);  
 
   return (
     <>

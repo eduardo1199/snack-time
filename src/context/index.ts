@@ -9,7 +9,7 @@ export type Order = {
   price: number;
 }
 
-type Slug = {
+export type Slug = {
   description: string;
   establishment: string;
   id: number;
@@ -61,7 +61,7 @@ class ShoppingCart {
   @action getFilterOrder(name?: string) {
     if (!name) return this.slugs;
 
-    return this.slugs.filter(slug => slug.name.includes(name));
+    return this.slugs.filter(slug => (slug.name.toLocaleLowerCase()).includes(name.toLocaleLowerCase()));
   }
 
   @computed get totalPriceOrder(): string {
