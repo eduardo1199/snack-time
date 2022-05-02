@@ -1,4 +1,4 @@
-import { Flex, SimpleGrid, Text, VStack, HStack, Image, Button } from '@chakra-ui/react';
+import { Flex, Text, VStack, HStack, Button } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 import router from 'next/router';
 import { Header } from '../../components/Header/Header';
@@ -7,8 +7,11 @@ import { api } from '../../services/api';
 import styles from '../../styles/establishments.module.scss';
 
 import { Box } from '@mui/material';
+import { renderLogoEstablishment } from './utils';
+import { ShoppingCartStore } from '../../context';
+import { useContext, useEffect } from 'react';
 
-interface Establishments {
+interface EstablishmentsProps {
   establishments: {
     id: number;
 		name: string;
@@ -19,7 +22,13 @@ interface Establishments {
   }[]
 }
 
-export default function Establishments({ establishments }: Establishments) {
+const Establishments = ({ establishments }: EstablishmentsProps) => {
+  const shoppingCart = useContext(ShoppingCartStore);
+
+  useEffect(() => {
+    shoppingCart.setOrdersEmpty();
+  }, [shoppingCart])
+
   return(
     <>
       <Header />
@@ -37,13 +46,7 @@ export default function Establishments({ establishments }: Establishments) {
                 >
                   <Flex w="100%" h="100%" p="10" d="flex" direction="row">
                     <HStack spacing="20">
-                      <Image 
-                        boxSize='150px'
-                        objectFit='cover'
-                        borderRadius="10"
-                        src='https://bit.ly/dan-abramov'
-                        alt='Dan Abramov'
-                      />
+                      {renderLogoEstablishment(establishment.name)}
                       <VStack spacing="25">
                         <Text as="p" mr="auto">{establishment.name} / 
                           <Text as="span">{establishment.type}</Text>
@@ -65,9 +68,13 @@ export default function Establishments({ establishments }: Establishments) {
 export const getStaticProps: GetStaticProps = async () => {
   const response = await api.get('estabelecimentos');
 
+  console.log(response.data)
+
   return {
     props: {
       establishments: response.data
     }
   }
 }
+
+export default Establishments; 

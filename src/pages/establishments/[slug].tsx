@@ -8,14 +8,16 @@ import { api } from "../../services/api";
 
 import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
-import { formatPrice } from '../../utils';
+import { formatPrice } from './utils';
 import { observer } from 'mobx-react';
 import { ShoppingCartStore, Slug } from '../../context';
-import { toJS } from 'mobx';
 
 const SlugEstablishment = observer(() => {
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const shoppingCart = useContext(ShoppingCartStore);
+
   const { query } = useRouter();
 
   useEffect(() => {
@@ -23,10 +25,11 @@ const SlugEstablishment = observer(() => {
       const response = await api.get(query.slug as string);
 
       shoppingCart.setSlugs(response.data);
+      setLoading(false);
     }
 
     getSlugEstablishment();
-  }, [query.slug]);  
+  }, [query.slug, shoppingCart]);
 
   return (
     <>
@@ -50,7 +53,7 @@ const SlugEstablishment = observer(() => {
           marginTop="2rem"
         >
           <Grid container spacing={8} direction="row">
-            {shoppingCart.getFilterOrder(search).map(slug => {
+            {shoppingCart.getFilterSlugs(search).map(slug => {
               return(
                 <Grid item xs={4} key={slug.id}>
                   <BoxContainer>

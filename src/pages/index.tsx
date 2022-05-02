@@ -16,7 +16,7 @@ export default function Home() {
           <span>
             Pronto para o lanche!
             <h1>
-              Só aqui no SlackTime tem!
+              Só aqui no SnackTime tem!
             </h1>
           </span>
           <h4>
@@ -30,7 +30,7 @@ export default function Home() {
           </Button>
         </div>
       </main>
-    </>
+    </> 
   )
 }
 

@@ -14,7 +14,7 @@ export function Header() {
       <div className={styles.headerContent}>
         <div className={styles.logoContainer}>
           <Fastfood />
-          <span>SlackTime</span>
+          <span>SnackTime</span>
         </div>
         <div className={styles.userContainer}>
           <AccountMenu />

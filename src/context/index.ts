@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { action, observable, computed, toJS, makeObservable } from 'mobx';
-import { formatPrice } from '../utils';
+import { formatPrice } from '../pages/establishments/utils';
 
 export type Order = {
   name: string;
@@ -32,6 +32,10 @@ class ShoppingCart {
     this.slugs = value;
   }
 
+  @action setOrdersEmpty(){
+    this.order = [];
+  }
+
   @action setOrderShoppingCart = (orderParams: Order) => {
     if(this.order.length === 0) {
       const newOrder = [orderParams];
@@ -58,10 +62,12 @@ class ShoppingCart {
     return this.order.filter(order => order.quantity !== 0);
   }
 
-  @action getFilterOrder(name?: string) {
-    if (!name) return this.slugs;
+  @action getFilterSlugs(name: string) {
+    if(name) {
+      return this.slugs.filter(slug => (slug.name.toLocaleLowerCase()).includes(name.toLocaleLowerCase()));
+    }
 
-    return this.slugs.filter(slug => (slug.name.toLocaleLowerCase()).includes(name.toLocaleLowerCase()));
+    return this.slugs
   }
 
   @computed get totalPriceOrder(): string {
@@ -73,7 +79,6 @@ class ShoppingCart {
   }
 
   @computed get totalQuantity(): number {
-    console.log(toJS(this.order));
 
     const calculatorTotal = this.order.reduce((sumTotal, order) => {
       return sumTotal + order.quantity;

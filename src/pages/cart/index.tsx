@@ -7,9 +7,9 @@ import { observer } from "mobx-react";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Container, Card, BoxPrice } from '../../styles/shoppingCart.module';
-import { ShoppingCartStore, Order } from "../../context";
-import { useContext, useEffect } from "react";
-import { formatPrice } from "../../utils";
+import { ShoppingCartStore } from "../../context";
+import { useContext } from "react";
+import { formatPrice } from "../establishments/utils";
 
 const ShoppingCart = observer(() => {
   const shoppingCart = useContext(ShoppingCartStore);
