@@ -68,8 +68,6 @@ const Establishments = ({ establishments }: EstablishmentsProps) => {
 export const getStaticProps: GetStaticProps = async () => {
   const response = await api.get('estabelecimentos');
 
-  console.log(response.data)
-
   return {
     props: {
       establishments: response.data

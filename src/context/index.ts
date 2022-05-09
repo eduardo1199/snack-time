@@ -16,7 +16,10 @@ export type Slug = {
   name: string;
   price: number;
   type: string;
+  quantity: number;
 }
+
+export type ResponseSlug = Omit<Slug, 'quantity'>;
 
 class ShoppingCart {
   @observable order: Order[];
@@ -30,6 +33,20 @@ class ShoppingCart {
 
   @action setSlugs(value: Slug[]){
     this.slugs = value;
+
+    value.map(slug => {
+      if(slug.quantity){
+        this.setOrderShoppingCart(
+          {
+            name: slug.name,
+            quantity: slug.quantity,
+            establishment: slug.establishment,
+            price: slug.price
+          }
+        )        
+      }
+    });
+
   }
 
   @action setOrdersEmpty(){

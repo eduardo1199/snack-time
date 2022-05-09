@@ -10,7 +10,8 @@ import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
 import { formatPrice } from './utils';
 import { observer } from 'mobx-react';
-import { ShoppingCartStore, Slug } from '../../context';
+import { ShoppingCartStore, Slug, ResponseSlug } from '../../context';
+import { toJS } from 'mobx';
 
 const SlugEstablishment = observer(() => {
   const [search, setSearch] = useState('');
@@ -22,12 +23,27 @@ const SlugEstablishment = observer(() => {
 
   useEffect(() => {
     const getSlugEstablishment = async () => {
-      const response = await api.get(query.slug as string);
+      const response = await api.get<ResponseSlug[]>(query.slug as string);
 
-      shoppingCart.setSlugs(response.data);
+      const serializeSlugResponse = response.data.map(slug => {
+        if(!localStorage.getItem(slug.name)) {
+          return {
+            ...slug,
+            quantity: 0
+          }
+        } else {
+          return {
+            ...slug,
+            quantity: Number(localStorage.getItem(slug.name))
+          }
+        }
+      });
+
+      shoppingCart.setSlugs(serializeSlugResponse);
       setLoading(false);
     }
 
+    
     getSlugEstablishment();
   }, [query.slug, shoppingCart]);
 
@@ -72,6 +88,7 @@ const SlugEstablishment = observer(() => {
                       </PriceContainer>
 
                       <InputDisplayNumberComponet 
+                        current={slug.quantity}
                         price={slug.price}
                         establishment={slug.establishment}
                         slug={slug.name}
