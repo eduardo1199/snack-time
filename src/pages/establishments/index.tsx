@@ -6,10 +6,10 @@ import { api } from '../../services/api';
 
 import styles from '../../styles/establishments.module.scss';
 
-import { Box } from '@mui/material';
+import { Box, Input } from '@mui/material';
 import { renderLogoEstablishment } from './utils';
 import { ShoppingCartStore } from '../../context';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 interface EstablishmentsProps {
   establishments: {
@@ -22,8 +22,17 @@ interface EstablishmentsProps {
   }[]
 }
 
-const Establishments = ({ establishments }: EstablishmentsProps) => {
+const Establishments = (establishments: EstablishmentsProps) => {
+  const [search, setSearch] = useState('');
   const shoppingCart = useContext(ShoppingCartStore);
+
+  const filteredEstablishments = (name: string) => {
+    if(!name) return establishments.establishments;
+
+    const filtered = establishments.establishments.filter(establishments => (establishments.name.toLocaleLowerCase()).includes(name.toLocaleLowerCase()));
+
+    return filtered;
+  }
 
   useEffect(() => {
     shoppingCart.setOrdersEmpty();
@@ -34,7 +43,17 @@ const Establishments = ({ establishments }: EstablishmentsProps) => {
       <Header />
       <Flex w="100%" my="6" mx="auto" px="6" maxWidth={1200}>
         <VStack spacing="25" mx="8" pr="7" py="20" w="100%">
-          {establishments.map(establishment => {
+          <Box width="100%" display="flex" justifyContent="center">
+            <Input
+              style={{
+                color: 'white',
+                width: '100%'
+              }}
+              placeholder='Pesquisar por um estabelecimento...'
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </Box>
+          {filteredEstablishments(search).map(establishment => {
             return(
               <Box className={styles.container} key={establishment.id}>
                 <Button 
