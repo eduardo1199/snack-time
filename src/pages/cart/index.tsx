@@ -10,6 +10,7 @@ import { Container, Card, BoxPrice } from '../../styles/shoppingCart.module';
 import { ShoppingCartStore } from "../../context";
 import { useContext } from "react";
 import { formatPrice } from "../establishments/utils";
+import { CheckoutHeader } from "../../components/CheckoutHeader/CheckoutHeader";
 
 const ShoppingCart = observer(() => {
   const shoppingCart = useContext(ShoppingCartStore);
@@ -42,6 +43,7 @@ const ShoppingCart = observer(() => {
             </Card>
           )
         })}
+        <CheckoutHeader />
       </Container>
     </>
   )

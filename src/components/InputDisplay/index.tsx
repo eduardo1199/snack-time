@@ -14,7 +14,7 @@ interface InputDisplayNumberComponetProps {
 
 export const InputDisplayNumberComponet = observer((props: InputDisplayNumberComponetProps) => {
   const shoppingCart = useContext(ShoppingCartStore);
-  const [value, setValue] = useState(props.current);
+  const [value, setValue] = useState(props.current ?? 0);
 
  const decrementSlugQuantity = () => {
   shoppingCart.setOrderShoppingCart({
@@ -48,7 +48,7 @@ export const InputDisplayNumberComponet = observer((props: InputDisplayNumberCom
           () => {decrementSlugQuantity()}
         }
       >-</Button>
-      <Input value={value} readOnly/>
+      <Input value={value} readOnly />
       <Button
         onClick={
           () => {incrementSlugQuantity()}
