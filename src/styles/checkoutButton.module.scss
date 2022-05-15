@@ -1,0 +1,22 @@
+.buttonfinalizar {
+    margin-top: 20px;
+    display: flex;
+    button{
+        flex: 1;
+        font-size: 18px;
+        background-color: #f1c40f;
+        padding: 8px;
+        width: 200px;
+        border-radius: 10px;
+    }
+    button:hover{
+        flex: 1;
+        font-size: 18px;
+        border: solid 1px white;
+        color: #fff;
+        background-color: #1e1e22;
+        padding: 8px;
+        width: 200px;
+        border-radius: 10px;
+    }
+}
