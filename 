@@ -1,0 +1,107 @@
+[33mcommit a18ee9ddd44458ac4f1a5c671174449863fccd11[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Eduardo Soares de Araujo Aquino <eduardo.soares.116@ufrn.edu.br>
+Date:   Thu May 12 10:26:33 2022 -0300
+
+    component header
+
+[33mcommit 6ed2ea83664215c100cdff05a1f12f7eeccaee12[m
+Author: Eduardo Soares de Araujo Aquino <eduardo.soares.116@ufrn.edu.br>
+Date:   Mon May 9 16:14:41 2022 -0300
+
+    adicionar noticação de aviso e filtro para estabelecimento
+
+[33mcommit f35299e7b66b2c5c23b3b6e72c4050453012e35e[m
+Author: Eduardo Soares de Araujo Aquino <eduardo.soares.116@ufrn.edu.br>
+Date:   Mon May 9 14:16:09 2022 -0300
+
+    salvar pedidos cadastro via local storage
+
+[33mcommit 5c95e3df17c1667d7fb61fd5f6dd5232879a6b3a[m
+Author: Eduardo Soares de Araujo Aquino <eduardo.soares.116@ufrn.edu.br>
+Date:   Mon May 2 13:33:43 2022 -0300
+
+    adicionando logos aos estabelecimentos
+
+[33mcommit 99df33b6afcf34f137ab0891e74e74d5c1a8cd1a[m
+Author: Eduardo Soares de Araujo Aquino <eduardo.soares.116@ufrn.edu.br>
+Date:   Sun Apr 24 16:31:27 2022 -0300
+
+    adicionar middleware para página de checkout
+
+[33mcommit 4e81fbade939f9d698907b79fd3db28d46d6d297[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Sat Apr 23 17:22:03 2022 -0300
+
+    Criar filtro para os lanches disponiveis no estabelecimento
+
+[33mcommit 38120583b66486cf3f9ddd021d4a83ade0582adc[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Sat Apr 23 16:45:54 2022 -0300
+
+    página de pedidos cadastrados
+
+[33mcommit 130cd4a33521f8c14a1fa808b9871670745146a2[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Sat Apr 23 15:17:49 2022 -0300
+
+    funcionalidade de adicionar pedidos e quantidades no carrinho
+
+[33mcommit a95290e80c2fa52a4a1f7c2ade3be1a1c344a517[m
+Author: Eduardo Soares de Araujo Aquino <eduardo.soares.116@ufrn.edu.br>
+Date:   Sat Apr 23 13:24:26 2022 -0300
+
+    introduzir contexto no componente nav
+
+[33mcommit 97e2110e1638eadaff24deb0c88f89867554b633[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Fri Apr 22 22:04:05 2022 -0300
+
+    componente de navbar
+
+[33mcommit 9788b5371a578307243f65aace4e9561d65f8ab9[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Thu Apr 21 22:56:53 2022 -0300
+
+    Adicionar função de carrinho para o contexto
+
+[33mcommit fb7f4fd1945d98afada851ac4dae2ce5453b306d[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Tue Apr 19 21:22:05 2022 -0300
+
+    Criando página de comidas oferecidas pelo estabelecimento
+
+[33mcommit 72af921a67c4ee4f1965dd89e3957c009507876d[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Sun Apr 17 20:45:46 2022 -0300
+
+    Criação da página de listagem de estabelecimentos
+
+[33mcommit 1506ca5ed3141c695252b8743f968e2ebfb7544b[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Thu Apr 14 22:09:55 2022 -0300
+
+    Adicionar requisição para estabelecimentos
+
+[33mcommit d15c47dc69f3a528869df94aa3493e44e0e5c5f7[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Thu Apr 14 20:25:13 2022 -0300
+
+    Adicionando header global
+
+[33mcommit df070ebe9929a60ec92676e5d36ffe69edf8e7c7[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Tue Apr 12 13:19:42 2022 -0300
+
+    Implementação da autenticação do usuário
+
+[33mcommit 5eb9acb18991ff1b25e8401a3155e49df02fd1b1[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Sun Apr 10 11:54:22 2022 -0300
+
+    Configuração inicial do projeto snack
+
+[33mcommit 100c3256c6c2635dac5bbb593550f81a90964936[m
+Author: eduardo1199 <eduardo.soares.116@ufrn.edu.br>
+Date:   Sun Apr 10 11:43:37 2022 -0300
+
+    Initial commit from Create Next App
