@@ -12,6 +12,8 @@ import { useRouter } from 'next/router'
 export default function Home() {
   const [login, setLogin] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [step, setStep] = useState<number>(0);
+
   const cookies = new Cookies();
 
   const router = useRouter();
@@ -46,7 +48,9 @@ export default function Home() {
         password
       });
 
-      
+      alert('Usuário cadastro com sucesso');
+
+      setStep(0);
     } catch (err) {
       alert(err.message);
     }
@@ -95,9 +99,10 @@ export default function Home() {
                 style: { color: '#fff' },
               }}
             />
-            <button type="submit">Entrar</button>
+
+            {step === 0 ? <button type="submit">Entrar</button> : <button onClick={() => registerUser()}>Cadastrar</button>}
           </form>
-          <button type="button" onClick={() => registerUser()}>Cadastro</button>
+          {step === 0 ? <button type="button" onClick={() => setStep(1)}>Cadastro do slack time</button> : <button type="button" onClick={() => setStep(0)}>Voltar</button>}
         </div>
       </main>
     </> 
