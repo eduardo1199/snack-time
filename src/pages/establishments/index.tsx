@@ -91,6 +91,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = cookies.get('token');
   
   try {
+
+    if(!token) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+      }
+    }
+
     const response = await api.get('estabelecimentos', {
       headers: {
         Authorization: 'Bearer ' + token

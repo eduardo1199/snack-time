@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { signOut } from 'next-auth/react';
-
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -13,17 +11,32 @@ import Tooltip from '@mui/material/Tooltip';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Logout from '@mui/icons-material/Logout';
 
+import { useRouter } from 'next/router'
+
+import Cookies from 'universal-cookie';
+
 export function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const router = useRouter();
+  const cookies = new Cookies();
 
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const signOut = () => {
+    cookies.remove('token');
+
+    router.push('/establishments');
+  }
+
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
