@@ -1,10 +1,12 @@
 import { Flex, Text, VStack, HStack, Button } from '@chakra-ui/react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import router from 'next/router';
 import { Header } from '../../components/Header/Header';
 import { api } from '../../services/api';
 
 import styles from '../../styles/establishments.module.scss';
+
+import Cookies from 'universal-cookie';
 
 import { Box, Input } from '@mui/material';
 import { renderLogoEstablishment } from './utils';
@@ -84,12 +86,27 @@ const Establishments = (establishments: EstablishmentsProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await api.get('estabelecimentos');
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const cookies = new Cookies(req.headers.cookie);
+  const token = cookies.get('token');
+  
+  try {
+    const response = await api.get('estabelecimentos', {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    });
 
-  return {
-    props: {
-      establishments: response.data
+    return {
+      props: {
+        establishments: response.data
+      }
+    }
+  } catch (e) {
+    return {
+      props: {
+        establishments: []
+      }
     }
   }
 }

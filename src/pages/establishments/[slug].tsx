@@ -10,12 +10,14 @@ import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
 import { formatPrice } from './utils';
 import { observer } from 'mobx-react';
-import { ShoppingCartStore, Slug, ResponseSlug } from '../../context';
-import { toJS } from 'mobx';
+import { ShoppingCartStore, ResponseSlug } from '../../context';
+
+import Cookies from 'universal-cookie';
 
 const SlugEstablishment = observer(() => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const cookies = new Cookies();
 
   const shoppingCart = useContext(ShoppingCartStore);
 
@@ -23,7 +25,14 @@ const SlugEstablishment = observer(() => {
 
   useEffect(() => {
     const getSlugEstablishment = async () => {
-      const response = await api.get<ResponseSlug[]>(query.slug as string);
+
+      const token = cookies.get('token');
+
+      const response = await api.get<ResponseSlug[]>(query.slug as string, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      });
 
       const serializeSlugResponse = response.data.map(slug => {
         if(!localStorage.getItem(slug.name)) {
@@ -69,16 +78,10 @@ const SlugEstablishment = observer(() => {
           marginTop="2rem"
         >
           <Grid container spacing={8} direction="row">
-            {shoppingCart.getFilterSlugs(search).map(slug => {
+            {shoppingCart.getFilterSlugs(search).map((slug, index) => {
               return(
                 <Grid item xs={4} key={slug.id}>
                   <BoxContainer>
-                      <Image 
-                        objectFit='cover'
-                        borderRadius="10"
-                        src='https://bit.ly/dan-abramov'
-                        alt='Dan Abramov'
-                      />
 
                       <h5>{slug.establishment}</h5>
                       

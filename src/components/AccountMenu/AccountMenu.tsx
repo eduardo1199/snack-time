@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -15,8 +15,6 @@ import Logout from '@mui/icons-material/Logout';
 
 export function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const { data: session, status } = useSession();
 
   const open = Boolean(anchorEl);
 
@@ -38,7 +36,7 @@ export function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 48, height: 48 }} src={status === 'authenticated' ? session.user.image : ''}></Avatar>
+            <Avatar sx={{ width: 48, height: 48 }}></Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -82,7 +80,7 @@ export function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar src={status === 'authenticated' ? session.user.image : ''} /> Perfil
+          <Avatar /> Perfil
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
