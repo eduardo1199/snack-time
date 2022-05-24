@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { api } from '../services/api';
 import Cookies from 'universal-cookie';
 
 import { TextField } from '@mui/material';
+
+import { toast } from 'react-toastify';
+
+import { ToastContainer } from 'react-toastify';
 
 import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router'
@@ -17,6 +21,11 @@ export default function Home() {
   const cookies = new Cookies();
 
   const router = useRouter();
+  
+  useEffect(() => {
+    localStorage.clear();
+    cookies.remove('orders')
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +43,13 @@ export default function Home() {
 
       cookies.set('token', response.data.token);
 
+      localStorage.setItem('user', login);
+
       router.push('/establishments');
     } catch (err) {
-      alert(err.message);
-      return;
+      toast.error("Erro realizar login, verificar sua senha!", {
+        theme: 'dark'
+      });
     }
   }
 
@@ -48,7 +60,9 @@ export default function Home() {
         password
       });
 
-      alert('Usuário cadastro com sucesso');
+      toast.success("Usuário cadastrado com sucesso!", {
+        theme: 'light'
+      });
 
       setStep(0);
     } catch (err) {
@@ -90,21 +104,25 @@ export default function Home() {
               label="Senha"
               variant="filled"
               required
+              type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               InputProps={{
                 style: { color: '#fff' },
+
               }}
               InputLabelProps={{
                 style: { color: '#fff' },
               }}
+              
             />
 
-            {step === 0 ? <button type="submit">Entrar</button> : <button onClick={() => registerUser()}>Cadastrar</button>}
+            {step === 0 ? <button type="submit">Entrar</button> : <button type="button" onClick={() => registerUser()}>Cadastrar</button>}
           </form>
           {step === 0 ? <button type="button" onClick={() => setStep(1)}>Cadastro do slack time</button> : <button type="button" onClick={() => setStep(0)}>Voltar</button>}
         </div>
       </main>
+      <ToastContainer autoClose={3000} />
     </> 
   )
 }

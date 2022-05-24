@@ -7,21 +7,40 @@ import { observer } from "mobx-react";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Container, Card, BoxPrice } from '../../styles/shoppingCart.module';
-import { ShoppingCartStore } from "../../context";
-import { useContext } from "react";
+import { Order } from "../../context";
+import { useState, useEffect, useMemo } from "react";
 import { formatPrice } from "../establishments/utils";
 import { CheckoutBottom } from "../../components/CheckoutBottom/CheckoutBottom"
 import { CheckoutButton } from "../../components/CheckoutButton/CheckoutButton"
 
+import Cookies from 'universal-cookie';
 
 const ShoppingCart = observer(() => {
-  const shoppingCart = useContext(ShoppingCartStore);
+  const [orders, setOrders] = useState<Order[]>([])
+
+  const cookies = new Cookies();
+
+  useEffect(() => {
+    const cookiesOrders = cookies.get('orders');
+
+    setOrders(cookiesOrders);
+  }, [])
+
+  const infoCheckoutOrders = useMemo(() => orders.reduce((acc, item) => {
+    acc.quantityTotal +=  item.price * item.quantity;
+    acc.ordersTotal = orders.length;
+
+    return acc;
+  }, {
+    quantityTotal: 0,
+    ordersTotal: 0
+  }), [orders]);
 
   return(
     <>
       <Header />
       <Container>
-        {shoppingCart.getCheckoutOrder().map(order => {
+        {orders.map(order => {
           return (
             <Card key={order.name}>
               <Image 
@@ -45,7 +64,10 @@ const ShoppingCart = observer(() => {
             </Card>
           )
         })}
-        <CheckoutBottom />
+        <CheckoutBottom 
+          ordersTotal={infoCheckoutOrders.ordersTotal}
+          priceTotal={formatPrice(infoCheckoutOrders.quantityTotal)}
+        />
         <CheckoutButton />
 
       </Container>

@@ -10,7 +10,6 @@ export const Container = styled(Box)`
 `
 
 export const Card = styled(Box)`
-  width: 100%;
   height: 8rem;
 
   display: flex;

@@ -93,7 +93,7 @@ export function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> Perfil
+          <Avatar /> 
         </MenuItem>
         <MenuItem>
           <ListItemIcon>

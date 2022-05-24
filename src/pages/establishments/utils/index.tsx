@@ -30,3 +30,16 @@ export const renderLogoEstablishment = (name: string) => {
 
   return Logo[name];
 }
+
+export const renderLogoFoods = [ 
+  <Image src="/logoFoods/bombomgrancherie.png" width="150px" height="150px" layout="fixed" />,     
+  <Image src="/logoFoods/gelato.png"  width="150px" height="150px" layout="fixed"/>,     
+  <Image src="/logoFoods/ovobenditocacao.png"  width="150px" height="150px" layout="fixed"/>,     
+  <Image src="/logoFoods/ovocacaumagiaaoleite.png" width="150px" height="150px" layout="fixed"/>,    
+  <Image src="/logoFoods/ovolanut.png"  width="150px" height="150px" layout="fixed"/>,     
+  <Image src="/logoFoods/preciosidadessortido.png"  width="150px" height="150px" layout="fixed"/>,     
+  <Image src="/logoFoods/TableteDreamsMilFolhasAvelã130g.png"  width="150px" height="150px" layout="fixed"/>,    
+  <Image src="/logoFoods/TableteDreamsTortadeMaracujá130g.png" width="150px" height="150px" layout="fixed"/>,     
+  <Image src="/logoFoods/trufacoco.png"  width="150px" height="150px" layout="fixed"/>,     
+  <Image src="/logoFoods/trufamaracuja.png" width="150px" height="150px" layout="fixed" />
+];

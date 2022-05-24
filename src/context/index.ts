@@ -51,6 +51,7 @@ class ShoppingCart {
 
   @action setOrdersEmpty(){
     this.order = [];
+    this.slugs = [];
   }
 
   @action setOrderShoppingCart = (orderParams: Order) => {
@@ -75,16 +76,12 @@ class ShoppingCart {
     }
   }
 
-  @action getCheckoutOrder() {
-    return this.order.filter(order => order.quantity !== 0);
-  }
-
   @action getFilterSlugs(name: string) {
     if(name) {
       return this.slugs.filter(slug => (slug.name.toLocaleLowerCase()).includes(name.toLocaleLowerCase()));
     }
 
-    return this.slugs
+    return this.slugs;
   }
 
   @computed get totalPriceOrder(): string {

@@ -7,10 +7,13 @@ import router from 'next/router';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 
+import Cookies from 'universal-cookie';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 export const NavBar = observer(() => {
   const shoppingCart = useContext(ShoppingCartStore);
+  const cookies = new Cookies();
 
   const navigationToShoppingCartPage = () => {
     const verifyShoppingCart = shoppingCart.order.filter((order) => order.quantity !== 0);
@@ -23,6 +26,8 @@ export const NavBar = observer(() => {
 
       return;
     } 
+
+    cookies.set('orders', JSON.stringify(verifyShoppingCart));
 
     router.push('/cart');
   }

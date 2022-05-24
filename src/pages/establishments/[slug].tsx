@@ -8,7 +8,7 @@ import { api } from "../../services/api";
 
 import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
-import { formatPrice } from './utils';
+import { formatPrice, renderLogoFoods } from './utils';
 import { observer } from 'mobx-react';
 import { ShoppingCartStore, ResponseSlug } from '../../context';
 
@@ -25,7 +25,6 @@ const SlugEstablishment = observer(() => {
 
   useEffect(() => {
     const getSlugEstablishment = async () => {
-
       const token = cookies.get('token');
 
       const response = await api.get<ResponseSlug[]>(query.slug as string, {
@@ -54,6 +53,10 @@ const SlugEstablishment = observer(() => {
 
     
     getSlugEstablishment();
+
+    return () => {
+      shoppingCart.setSlugs([]);
+    }
   }, [query.slug, shoppingCart]);
 
   return (
@@ -82,7 +85,7 @@ const SlugEstablishment = observer(() => {
               return(
                 <Grid item xs={4} key={slug.id}>
                   <BoxContainer>
-
+                      {renderLogoFoods[index]}
                       <h5>{slug.establishment}</h5>
                       
                       <PriceContainer>

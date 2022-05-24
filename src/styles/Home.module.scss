@@ -57,6 +57,7 @@
       font-weight: 900;
       color: var(--white);
       transition: filter 0.5;
+      border: none;
   
       &:hover {
         background-color: var(--yellow-500);
@@ -69,7 +70,7 @@
     }
   }
 
-  button[type="button"] {
+  button {
     display: flex;
     margin-left: auto;
     margin-top: 0.5rem;

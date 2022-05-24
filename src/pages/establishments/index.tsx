@@ -27,6 +27,7 @@ interface EstablishmentsProps {
 const Establishments = (establishments: EstablishmentsProps) => {
   const [search, setSearch] = useState('');
   const shoppingCart = useContext(ShoppingCartStore);
+  const cookies = new Cookies();
 
   const filteredEstablishments = (name: string) => {
     if(!name) return establishments.establishments;
@@ -38,6 +39,7 @@ const Establishments = (establishments: EstablishmentsProps) => {
 
   useEffect(() => {
     shoppingCart.setOrdersEmpty();
+    cookies.remove('orders');
   }, [shoppingCart])
 
   return(
