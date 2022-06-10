@@ -1,17 +1,15 @@
-import { Flex, Text, VStack, HStack, Button } from '@chakra-ui/react';
+import { Flex, VStack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import router from 'next/router';
 import { Header } from '../../components/Header/Header';
 import { api } from '../../services/api';
 
-import styles from '../../styles/establishments.module.scss';
-
 import Cookies from 'universal-cookie';
 
-import { Box, Input } from '@mui/material';
-import { renderLogoEstablishment } from './utils';
+import { Box, Typography } from '@mui/material';
 import { ShoppingCartStore } from '../../context';
 import { useContext, useEffect, useState } from 'react';
+import { FilterBar } from '../../components/FilterBar';
+import { EstablishmentsContainer } from '../../components/Establishments';
 
 interface EstablishmentsProps {
   establishments: {
@@ -40,48 +38,37 @@ const Establishments = (establishments: EstablishmentsProps) => {
   useEffect(() => {
     shoppingCart.setOrdersEmpty();
     cookies.remove('orders');
-  }, [shoppingCart])
+  }, [shoppingCart]);
 
   return(
     <>
       <Header />
       <Flex w="100%" my="6" mx="auto" px="6" maxWidth={1200}>
         <VStack spacing="25" mx="8" pr="7" py="20" w="100%">
-          <Box width="100%" display="flex" justifyContent="center">
-            <Input
-              style={{
-                color: 'white',
-                width: '100%'
-              }}
-              placeholder='Pesquisar por um estabelecimento...'
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </Box>
+
+          <FilterBar onChangeFilter={setSearch} label="pesquisar por um estabelecimento..." />
+
           {filteredEstablishments(search).map(establishment => {
             return(
-              <Box className={styles.container} key={establishment.id}>
-                <Button 
-                  w="100%" 
-                  bg="transparent" 
-                  outline="none" 
-                  border="none"
-                  onClick={() => router.push(`establishments/${establishment.slug}`)}
-                >
-                  <Flex w="100%" h="100%" p="10" d="flex" direction="row">
-                    <HStack spacing="20">
-                      {renderLogoEstablishment(establishment.name)}
-                      <VStack spacing="25">
-                        <Text as="p" mr="auto">{establishment.name} / 
-                          <Text as="span">{establishment.type}</Text>
-                        </Text>
-                        <Text as="span">{establishment.address}</Text>
-                      </VStack>
-                    </HStack>
-                  </Flex>
-                </Button>
-              </Box>
+              <EstablishmentsContainer 
+                key={establishment.id}
+                address={establishment.address}
+                id={establishment.id}
+                name={establishment.name}
+                type={establishment.type}
+                slug={establishment.slug}
+              />
             )
           })}
+
+          {filteredEstablishments(search).length === 0 && (
+            <Box>
+              <Typography fontSize={20} fontWeight="bold">
+                Nenhum estabelecimento encontrado
+              </Typography>
+            </Box>
+          )}
+
         </VStack>
       </Flex>
     </>

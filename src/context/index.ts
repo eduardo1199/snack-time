@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { action, observable, computed, toJS, makeObservable } from 'mobx';
-import { formatPrice } from '../pages/establishments/utils';
+import { formatPrice } from '../utils';
 
 export type Order = {
   name: string;

@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
-import { Box } from '@mui/material'; 
+import { Box, Grid } from '@mui/material'; 
 
-export const BoxContainer = styled(Box)`
-  width: 23rem;
-  height: 23rem;
+export const BoxContainer = styled(Grid)`
   border-radius: 2rem;
 
   background-color: var(--gray-850);
-  flex-direction: column;
 
   img {
     width: 100%;

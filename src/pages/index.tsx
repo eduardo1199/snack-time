@@ -4,19 +4,35 @@ import { GetServerSideProps } from 'next';
 import { api } from '../services/api';
 import Cookies from 'universal-cookie';
 
-import { TextField } from '@mui/material';
+import { TextField, CircularProgress } from '@mui/material';
 
 import { toast } from 'react-toastify';
 
 import { ToastContainer } from 'react-toastify';
 
-import styles from '../styles/Home.module.scss';
-import { useRouter } from 'next/router'
+import styles from '../styles/signin.module.scss';
+import { useRouter } from 'next/router';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+type SignFormData = {
+  login: string;
+  password: string;
+}
+
+const signInFormSchema = yup.object().shape({
+  login: yup.string().required('Login obrigatório'),
+  password: yup.string().required('Senha obrigatória').min(6, 'A senha precisa de no mínino 6 caracteres')
+})
 
 export default function Home() {
-  const [login, setLogin] = useState<string>();
-  const [password, setPassword] = useState<string>();
   const [step, setStep] = useState<number>(0);
+
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInFormSchema)
+  });
 
   const cookies = new Cookies();
 
@@ -24,11 +40,36 @@ export default function Home() {
   
   useEffect(() => {
     localStorage.clear();
-    cookies.remove('orders')
-  }, [])
+    cookies.remove('orders');
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleRegisterUser: SubmitHandler<SignFormData>  = async (fields, event) => {
+    event.preventDefault();
+
+    const { login, password } = fields;
+
+    try {
+       const response = await api.post('/user', {
+        login,
+        password
+      });
+
+      toast.success("Usuário cadastrado com sucesso!", {
+        theme: 'dark'
+      });
+
+      setStep(0);
+    } catch (err) {
+      toast.error('Login já utilizado!', {
+        theme: 'dark'
+      });
+    }
+  }
+
+  const handleLoginUser: SubmitHandler<SignFormData> = async (fields, event) => {
+    event.preventDefault();
+
+    const { login, password } = fields;
 
     try {
       const response = await api.post('/login', {
@@ -37,7 +78,10 @@ export default function Home() {
       });
 
       if(!response.data.token) {
-        alert('Erro ao verificar cadastro');
+        toast.error("Erro ao verificar cadastro!", {
+          theme: 'dark'
+        });
+
         return;
       }
 
@@ -50,23 +94,6 @@ export default function Home() {
       toast.error("Erro realizar login, verificar sua senha!", {
         theme: 'dark'
       });
-    }
-  }
-
-  const registerUser = async () => {
-    try {
-      const response = await api.post('/user', {
-        login,
-        password
-      });
-
-      toast.success("Usuário cadastrado com sucesso!", {
-        theme: 'light'
-      });
-
-      setStep(0);
-    } catch (err) {
-      alert(err.message);
     }
   }
 
@@ -85,41 +112,96 @@ export default function Home() {
             Faça o cadastro na nossa página para curtir seu lanche! 
           </h4>
         </section>
-        <div className={styles.containerSignIn}>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              label="Login"
-              variant="filled"
-              required
-              value={login}
-              onChange={e => setLogin(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#fff' },
-              }}
-              InputProps={{
-                style: { color: '#fff' },
-              }}
-            />
-            <TextField
-              label="Senha"
-              variant="filled"
-              required
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              InputProps={{
-                style: { color: '#fff' },
-
-              }}
-              InputLabelProps={{
-                style: { color: '#fff' },
-              }}
-              
-            />
-
-            {step === 0 ? <button type="submit">Entrar</button> : <button type="button" onClick={() => registerUser()}>Cadastrar</button>}
-          </form>
-          {step === 0 ? <button type="button" onClick={() => setStep(1)}>Cadastro do slack time</button> : <button type="button" onClick={() => setStep(0)}>Voltar</button>}
+        <div>
+          {step === 0 ? (
+            <form onSubmit={handleSubmit(handleLoginUser)} className={styles.formStyle}>
+              <TextField
+                label="Login"
+                variant="filled"
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
+                InputProps={{
+                  style: { color: '#fff' },
+                }}
+                error={formState.errors['login'] ? true : false}
+                helperText={formState.errors['login']?.message ?? ''}
+                {...register('login')}
+              />
+              <TextField
+                label="Senha"
+                variant="filled"
+                type="password"
+                error={formState.errors['password'] ? true : false}
+                helperText={formState.errors['password']?.message ?? ''}
+                InputProps={{
+                  style: { color: '#fff' },
+                }}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
+                {...register('password')}
+              />
+              <button type="submit">
+                <p>Entrar</p> {formState.isSubmitting && (
+                  <div>
+                    <CircularProgress size={17} color="warning" thickness={10} />
+                  </div>
+                )}
+              </button> 
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit(handleRegisterUser)} className={styles.formStyle}>
+              <TextField
+                label="Login"
+                variant="filled"
+                error={formState.errors['login'] ? true : false}
+                helperText={formState.errors['login']?.message ?? ''}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
+                InputProps={{
+                  style: { color: '#fff' },
+                }}
+                {...register('login')}
+              />
+              <TextField
+                label="Senha"
+                variant="filled"
+                type="password"
+                error={formState.errors['password'] ? true : false}
+                helperText={formState.errors['password']?.message ?? ''}
+                InputProps={{
+                  style: { color: '#fff' },
+                }}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
+                {...register('password')}
+              />
+              <button type="submit">
+                <p>Cadastrar</p>
+              </button>
+            </form>
+          )}
+         {step === 0 ? (
+            <button
+              className={styles.redirectbutton}
+              type="button"
+              onClick={() => setStep(1)}
+            >
+              Não tem login?! se cadastre no site!
+            </button>
+         ):(
+          <button
+            className={styles.redirectbutton}
+            type="button"
+            onClick={() => setStep(0)}
+          >
+            Voltar
+          </button>
+         )}
+         
         </div>
       </main>
       <ToastContainer autoClose={3000} />

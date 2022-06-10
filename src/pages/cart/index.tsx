@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Container, Card, BoxPrice } from '../../styles/shoppingCart.module';
 import { Order } from "../../context";
 import { useState, useEffect, useMemo } from "react";
-import { formatPrice } from "../establishments/utils";
+import { formatPrice } from "../../utils";
 import { CheckoutBottom } from "../../components/CheckoutBottom/CheckoutBottom"
 import { CheckoutButton } from "../../components/CheckoutButton/CheckoutButton"
 

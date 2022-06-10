@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 
 import Cookies from 'universal-cookie';
 import { Order } from '../../context';
-import { formatPrice } from '../../pages/establishments/utils';
+import { formatPrice } from '../../utils';
 import { api } from '../../services/api';
 import { useRouter } from 'next/router'
 

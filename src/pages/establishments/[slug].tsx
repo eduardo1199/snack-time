@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from "react";
 import { Box, Grid, Input } from '@mui/material'; 
-import { Image } from '@chakra-ui/react';
+import { GetServerSideProps } from 'next';
 import { Header } from "../../components/Header/Header";
 import { NavBar } from '../../components/NavBar';
 import { api } from "../../services/api";
 
-import { BoxContainer, PriceContainer } from '../../styles/slugs.module';
 import { InputDisplayNumberComponet } from '../../components/InputDisplay';
-import { formatPrice, renderLogoFoods } from './utils';
+import { formatPrice, renderLogoFoods } from '../../utils';
 import { observer } from 'mobx-react';
 import { ShoppingCartStore, ResponseSlug } from '../../context';
 
 import Cookies from 'universal-cookie';
+import { FilterBar } from '../../components/FilterBar';
+import { SlugComponent } from '../../components/SlugComponent';
 
 const SlugEstablishment = observer(() => {
   const [search, setSearch] = useState('');
@@ -63,17 +64,10 @@ const SlugEstablishment = observer(() => {
     <>
       <Header />
       <NavBar />
-      <Box display="flex" justifyContent="center" alignItems="center" marginTop="1rem" marginBottom="1rem">
-        <Input
-          style={{
-            color: 'white',
-            width: '75%'
-          }}
-          placeholder='pesquisar...'
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <Box maxWidth="1300px" margin="2rem auto 0 auto">
+        <FilterBar onChangeFilter={setSearch} label="pesquisar por um produto..." />
       </Box>
-      <Box flexDirection="column" height="100vh">
+      <Box height="100vh">
         <Box 
           maxWidth="1300px"
           marginLeft="auto"
@@ -83,25 +77,15 @@ const SlugEstablishment = observer(() => {
           <Grid container spacing={8} direction="row">
             {shoppingCart.getFilterSlugs(search).map((slug, index) => {
               return(
-                <Grid item xs={4} key={slug.id}>
-                  <BoxContainer>
-                      {renderLogoFoods[index]}
-                      <h5>{slug.establishment}</h5>
-                      
-                      <PriceContainer>
-                        <p>{slug.name}</p>
-                        <span>{formatPrice(slug.price)}</span>
-                      </PriceContainer>
-
-                      <InputDisplayNumberComponet 
-                        current={slug.quantity}
-                        price={slug.price}
-                        establishment={slug.establishment}
-                        slug={slug.name}
-                      />
-                      
-                  </BoxContainer>
-                </Grid>
+                <SlugComponent 
+                  establishment={slug.establishment}
+                  id={slug.id}
+                  index={index}
+                  name={slug.name}
+                  price={slug.price}
+                  quantity={slug.quantity}
+                  key={slug.id}
+                />
               )
             })}
           </Grid>
@@ -109,6 +93,27 @@ const SlugEstablishment = observer(() => {
       </Box>
     </>
   )
-})
+});
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const cookies = new Cookies(req.headers.cookie);
+  const token = cookies.get('token');
+
+
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+     
+    }
+  }
+}
 
 export default SlugEstablishment;
