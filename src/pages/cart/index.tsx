@@ -1,12 +1,9 @@
-import { Image } from "@chakra-ui/react";
-import { Box, IconButton } from "@mui/material";
 import { Header } from "../../components/Header/Header";
 
 import { observer } from "mobx-react";
 
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Container } from '../../styles/shoppingCart.module';
 
-import { Container, Card, BoxPrice } from '../../styles/shoppingCart.module';
 import { Order } from "../../context";
 import { useState, useEffect, useMemo } from "react";
 import { formatPrice } from "../../utils";
@@ -14,6 +11,7 @@ import { CheckoutBottom } from "../../components/CheckoutBottom/CheckoutBottom"
 import { CheckoutButton } from "../../components/CheckoutButton/CheckoutButton"
 
 import Cookies from 'universal-cookie';
+import { OrderCard } from "../../components/OrderCard";
 
 const ShoppingCart = observer(() => {
   const [orders, setOrders] = useState<Order[]>([])
@@ -42,32 +40,22 @@ const ShoppingCart = observer(() => {
       <Container>
         {orders.map(order => {
           return (
-            <Card key={order.name}>
-              <Image 
-                boxSize='100px'
-                objectFit='cover'
-                borderRadius="10"
-                src='https://bit.ly/dan-abramov'
-                alt='Dan Abramov'
-              />
-              <Box>
-                <h1>{order.name}</h1>
-                <span>{order.establishment}</span>
-                <span>Quantidade: {order.quantity}</span>
-              </Box>
-              <BoxPrice>
-                <h4>Valor : <p> {formatPrice(order.price)}</p></h4>
-                <IconButton aria-label="delete" color="error">
-                  <DeleteIcon />
-                </IconButton>
-              </BoxPrice>
-            </Card>
+            <OrderCard 
+              establishment={order.establishment}
+              name={order.name}
+              price={order.price}
+              quantity={order.quantity}
+              key={order.name}
+              visibleDelete
+            />
           )
         })}
+
         <CheckoutBottom 
           ordersTotal={infoCheckoutOrders.ordersTotal}
           priceTotal={formatPrice(infoCheckoutOrders.quantityTotal)}
         />
+        
         <CheckoutButton />
 
       </Container>

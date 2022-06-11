@@ -33,8 +33,14 @@ export function AccountMenu() {
 
   const signOut = () => {
     cookies.remove('token');
+    cookies.remove('user');
+    cookies.remove('orders');
 
-    router.push('/establishments');
+    router.push('/');
+  }
+
+  function navigationToCardSaved() {
+    router.push('/cart/SavedCard');
   }
 
   return (
@@ -93,9 +99,9 @@ export function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> 
+          <Avatar /> {cookies.get('user')}
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => navigationToCardSaved()}>
           <ListItemIcon>
             <ShoppingCart fontSize="small" />
           </ListItemIcon>

@@ -40,7 +40,6 @@ export default function Home() {
   
   useEffect(() => {
     localStorage.clear();
-    cookies.remove('orders');
   }, []);
 
   const handleRegisterUser: SubmitHandler<SignFormData>  = async (fields, event) => {
@@ -86,8 +85,7 @@ export default function Home() {
       }
 
       cookies.set('token', response.data.token);
-
-      localStorage.setItem('user', login);
+      cookies.set('user', login);
 
       router.push('/establishments');
     } catch (err) {

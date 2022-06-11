@@ -1,10 +1,7 @@
 import styles from '../../styles/checkoutButton.module.scss';
 
-import { observer } from "mobx-react";
-
 import Cookies from 'universal-cookie';
 import { Order } from '../../context';
-import { formatPrice } from '../../utils';
 import { api } from '../../services/api';
 import { useRouter } from 'next/router'
 
