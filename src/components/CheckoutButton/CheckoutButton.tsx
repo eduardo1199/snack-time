@@ -16,6 +16,7 @@ export function CheckoutButton(){
   const finishOrders = async () => {
     const cookiesOrders: Order[] = cookies.get('orders');
     const token = cookies.get('token');
+    const user = cookies.get('user');
 
     const product:  string[] = [];
     const quantity: number[] = [];
@@ -32,7 +33,7 @@ export function CheckoutButton(){
       product: product.toString(),
       quantity: quantity.toString(),
       total_price: total_price.toString(),
-      user_login: localStorage.getItem('user'),
+      user_login: user,
     };
 
     try {
