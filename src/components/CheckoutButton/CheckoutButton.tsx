@@ -47,6 +47,7 @@ export function CheckoutButton(){
         theme: 'light'
       });
 
+      localStorage.clear();
       router.push('/establishments');
     } catch (err) {
       toast.error("Erro ao salvar pedidos!", {
