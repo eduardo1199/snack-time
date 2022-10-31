@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { apiSnack } from '../../services/api';
+import { api } from '../../services/api';
 
 type User = {
  login: string;
@@ -10,7 +10,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   if(req.method === 'POST') {
     const user: User = req.body;
 
-    const response = await apiSnack.post('/user', user);
+    const response = await api.post('/user', user);
 
     return res.status(200).json(response);
   } else {
